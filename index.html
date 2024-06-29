@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="stylesheet.css">
+        <script src="script.js" defer></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Latest compiled JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <title>Calculator</title>
+    </head>
+    <body class="container">
+        <h1>Calculator</h1>
+        <div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-bs-toggle="tab" href="#curtains">Curtains</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#nets">Netting</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#mosquitoNets">Mosquito Nets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#pelmets">Pelmets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#blinds">Blinds</a>
+                </li>
+            </ul>
+        </div>
+        <p></p>
+        <div class="tab-content">
+            <div class="container tab-pane active" id="curtains">
+                <h3>Curtain Calculator</h3>
+                <div id="curtainCalcNav">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" data-bs-toggle="tab" href="#onEyelets">On Eyelets</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-bs-toggle="tab" href="#OnNormalTape">On Normal Tape</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-bs-toggle="tab" href="#onPinchPleatTape">On Pinch Pleat Tape</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="onEyelets" class="container tab-pane active">
+                        <h4>Curtains on Eyelets</h4>
+                        <div id="singleWidth">
+                            <h5>Single width fabric</h5>
+                            <form id="curtainForm1">
+                                <label for="CWindowWidth1">Width of Window (in metres):</label>
+                                <input type="number" name="cWindowWidth1" id="CWindowWidth1" step="0.01">
+                                <br>
+                                <label for="CWindowHeight1">Height of Window (in metres):</label>
+                                <input type="number" name="cWindowHeight1" id="CWindowHeight1" step="0.01">
+                                <br>
+                                <input type="submit" value="Calculate" class="btn btn-dark">
+                            </form>
+                            <div>
+                                Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric1" readonly>
+                                <br>
+                                Number of of metres of fabric for window size: <input type="text" name="" id="MetresFabric1" readonly>
+                                <br>
+                                Number of metres of curtain tape: <input type="text" name="" id="MetresCurtainTape1" readonly>
+                                <br>
+                                Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLining1" readonly>
+                            </div>
+                        </div>
+                        <p></p>
+                        <div id="doubleWidth">
+                            <h5>Double width fabric</h5>
+                            <form id="curtainForm2">
+                                <label for="CWindowWidth2">Width of Window (in metres):</label>
+                                <input type="number" name="cWindowWidth2" id="CWindowWidth2" step="0.01">
+                                <br>
+                                <label for="CWindowHeight2">Height of Window (in metres):</label>
+                                <input type="number" name="cWindowHeight2" id="CWindowHeight2" step="0.01">
+                                <br>
+                                <input type="submit" value="Calculate" class="btn btn-dark">
+                            </form>
+                            <div>
+                                Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric2" readonly>
+                                <br>
+                                Number of of metres of fabric for window size: <input type="text" name="" id="MetresFabric2" readonly>
+                                <br>
+                                Number of metres of curtain tape: <input type="text" name="" id="MetresCurtainTape2" readonly>
+                                <br>
+                                Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLining2" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+                    <div id="OnNormalTape" class="container tab-pane fade">
+                        <h4>Curtains on Normal Tape</h4>
+                        <form id="curtainForm3">
+                            <label for="CWindowWidth3">Width of Window (in metres):</label>
+                            <input type="number" name="cWindowWidth3" id="CWindowWidth3" step="0.01">
+                            <br>
+                            <label for="CWindowHeight3">Height of Window (in metres):</label>
+                            <input type="number" name="cWindowHeight3" id="CWindowHeight3" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric3" readonly>
+                            <br>
+                            Number of of metres of fabric for window size: <input type="text" name="" id="MetresFabric3" readonly>
+                            <br>
+                            Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLining3" readonly>
+                            <br>
+                            Number of metres of curtain tape: <input type="text" name="" id="MetresCurtainTape3" readonly>
+                            <br>
+                            Number of hooks: <input type="text" name="" id="CNumHooks3" readonly>
+                            <br>
+                            Number of runners: <input type="text" name="" id="CNumRunners3" readonly>
+                        </div>
+                    </div>
+                    <p></p>
+                    <div id="onPinchPleatTape" class="container tab-pane fade">
+                        <h4>Curtains on Pinch Pleat Tape</h4>
+                        <form id="curtainForm4">
+                            <label for="CWindowWidth4">Width of Window (in metres):</label>
+                            <input type="number" name="cWindowWidth4" id="CWindowWidth4" step="0.01">
+                            <br>
+                            <label for="CWindowHeight4">Height of Window (in metres):</label>
+                            <input type="number" name="cWindowHeight4" id="CWindowHeight4" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric4" readonly>
+                            <br>
+                            Number of of metres of fabric for window size: <input type="text" name="" id="MetresFabric4" readonly>
+                            <br>
+                            Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLining4" readonly>
+                            <br>
+                            Number of metres of curtain tape: <input type="text" name="" id="MetresCurtainTape4" readonly>
+                            <br>
+                            Number of hooks: <input type="text" name="" id="CNumHooks4" readonly>
+                            <br>
+                            Number of runners: <input type="text" name="" id="CNumRunners4" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container tab-pane fade" id="nets">
+                <h3>Netting Calculator</h3>
+                <form id="nettingForm">
+                    <label for="WindowWidth">Width of Window (in metres):</label>
+                    <input type="number" name="windowWidth" id="WindowWidth" step="0.01">
+                    <br>
+                    <input type="submit" value="Calculate" class="btn btn-dark">
+                </form>
+                <div>
+                    Number of metres of net: <input type="text" name="" id="MetresNet" readonly>
+                    <br>
+                    Number of metres of tape: <input type="text" name="" id="MetresTape" readonly>
+                    <br>
+                    Number of hooks: <input type="text" name="" id="NumHooks" readonly>
+                    <br>
+                    Number of runners: <input type="text" name="" id="NumRunners" readonly>
+                </div>
+            </div>
+            <div class="container tab-pane fade" id="mosquitoNets">
+                <h3>Mosquito Netting Calculator</h3>
+                <div>
+                    <ul class="nav nav-tabs flex column" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" data-bs-toggle="tab" href="#onRail">On Rail</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-bs-toggle="tab" href="#onHooks">On Hooks</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-bs-toggle="tab" href="#onRing">On Ring</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="onRail" class="container tab-pane active">
+                        <h4>Mosquito Net on Rail</h4>
+                        <form id="MnForm1">
+                            <label for="MnWidth1">Width of area to be covered (in metres):</label>
+                            <input type="number" name="MnWidth1" id="MnWidth1" step="0.01">
+                            <br>
+                            <label for="MnHeight1">Height of area (in metres):</label>
+                            <input type="number" name="MnHeight1" id="MnHeight1" step="0.01">
+                            <br>
+                            <label for="MnLength1">Length of area (in metres): </label>
+                            <input type="number" name="MnLength1" id="MnLength1">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Number of pieces of fabric (to be cut): <input type="text" name="" id="NumPFabricM1" readonly>
+                            <br>
+                            Number of of metres of mosquito net fabric: <input type="text" name="" id="MetresFabricM1" readonly>
+                            <br>
+                            Number of metres of tape: <input type="text" name="" id="MetresTapeM1" readonly>
+                            <br>
+                            Number of metres of tetron: <input type="text" name="" id="MetresTetronM1" readonly>
+                            <br>
+                            Number of hooks: <input type="text" name="" id="MNumHooks1" readonly>
+                            <br>
+                            Number of runners: <input type="text" name="" id="MNumRunners1" readonly>
+                            <br>
+                            Note:
+                            <br>
+                            1 mosquito net = 1 pair of tie backs
+                            <br>
+                            In cases where the mosquito net is going directly on the rail that is fixed on the 
+                            ceiling provide for a rope. (this is made up out of tetron and hollow fiber)
+                            <br>
+                            Length of rope: <input type="text" name="" id="LengthRope1" readonly>
+                        </div>
+                    </div>
+                    <div id="onHooks" class="container tab-pane fade">
+                        <h4>Mosquito Net on Hooks</h4>
+                        <form id="MnForm2">
+                            <label for="MnWidth2">Width of area to be covered (in metres):</label>
+                            <input type="number" name="MnWidth2" id="MnWidth2" step="0.01">
+                            <br>
+                            <label for="MnHeight2">Height of area (in metres):</label>
+                            <input type="number" name="MnHeight2" id="MnHeight2" step="0.01">
+                            <br>
+                            <label for="MnLength2">Length of area (in metres): </label>
+                            <input type="number" name="MnLength2" id="MnLength2">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Number of pieces of fabric (to be cut): <input type="text" name="" id="NumPFabricM2" readonly>
+                            <br>
+                            Number of of metres of mosquito net fabric: <input type="text" name="" id="MetresFabricM2" readonly>
+                            <br>
+                            Number of metres of tetron: <input type="text" name="" id="MetresTetronM2" readonly>
+                            <br>
+                            Note:
+                            <br>
+                            Each net should have;
+                            <ol>
+                                <li>4 pieces of pipes ( 2 pieces the size of the width and 2 pieces the size of the length)</li>
+                                <li>4 pieces of hooks</li>
+                                <li>4 pieces of ties</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div id="onRing" class="container tab-pane fade">
+                        <h4>Mosquito Net on Ring or Round Mosquito Net</h4>
+                        **come back
+                        <div>
+                            <ol>
+                                <li>
+                                    Single Bed: 4 pieces
+                                </li>
+                                <li>
+                                    Double Bed: 5 pieces
+                                </li>
+                                <li>
+                                    King Bed: 6 pieces
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container tab-pane fade" id="pelmets">
+                <h3>Pelmets Calculator</h3>
+                <div>
+                    <ul class="nav nav-tabs flex column" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" data-bs-toggle="tab" href="#GatheredPelmets">Gathered</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-bs-toggle="tab" href="#PleatedPelmets">Pleated</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-bs-toggle="tab" href="#StraightPelmets">Straight</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="GatheredPelmets" class="container tab-pane active">
+                        <h4>Gathered Pelmets</h4>
+                        <form id="PelmetForm1">
+                            <label for="PWidth1">Width of curtain box:</label>
+                            <input type="number" name="PWidth1" id="PWidth1" step="0.01">
+                            <br>
+                            <label for="PHeight1">Height of curtain box:</label>
+                            <input type="number" name="PHeight1" id="PHeight1" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Number of pieces: <input type="text" name="" id="NumPFabricP1" readonly>
+                            <br>
+                            Number of of metres of fabric: <input type="text" name="" id="MetresFabricP1" readonly>
+                            <br>
+                            Number of metres of curtain tape: <input type="text" name="" id="MetresTapeP1" readonly>
+                        </div>
+                    </div>
+                    <div id="PleatedPelmets" class="container tab-pane fade">
+                        <h4>Pleated Pelmets</h4>
+                        <form id="PelmetForm2">
+                            <label for="PWidth2">Width of curtain box:</label>
+                            <input type="number" name="PWidth2" id="PWidth2" step="0.01">
+                            <br>
+                            <label for="PHeight2">Height of curtain box:</label>
+                            <input type="number" name="PHeight2" id="PHeight2" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Number of pieces: <input type="text" name="" id="NumPFabricP2" readonly>
+                            <br>
+                            Number of of metres of fabric: <input type="text" name="" id="MetresFabricP2" readonly>
+                            <br>
+                            Number of metres of curtain tape: <input type="text" name="" id="MetresTapeP2" readonly>
+                            <br>
+                            Length of Velcro: <input type="text" name="" id="MetresVelcroP2" readonly>
+                        </div>
+                    </div>
+                    <div id="StraightPelmets" class="container tab-pane fade">
+                        <h4>Straight Pelmets</h4>
+                        <form id="PelmetForm3">
+                            <label for="PWidth3">Width of curtain box:</label>
+                            <input type="number" name="PWidth3" id="PWidth3" step="0.01">
+                            <br>
+                            <label for="PHeight3">Height of curtain box:</label>
+                            <input type="number" name="PHeight3" id="PHeight3" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Number of pieces: <input type="text" name="" id="NumPFabricP3" readonly>
+                            <br>
+                            Number of of metres of fabric: <input type="text" name="" id="MetresFabricP3" readonly>
+                            <br>
+                            Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLiningP3" readonly>
+                            <br>
+                            Number of metres of Board/Stiff: <input type="text" name="" id="MetresBoardP3" readonly>
+                            <br>
+                            Number of metres of braid: <input type="text" name="" id="MetresBraidP3" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container tab-pane fade" id="blinds">
+                <h3>Blinds Calculator</h3>
+                <div>
+                    <ul class="nav nav-tabs flex column" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" data-bs-toggle="tab" href="#VenetianBlinds">Venetian</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-bs-toggle="tab" href="#VerticalBlinds">Vertical</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-bs-toggle="tab" href="#RollerBlinds">Roller</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#ZebraBlinds">Zebra</a>
+                          </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="VenetianBlinds" class="container tab-pane active">
+                        <h4>Venetian Blinds</h4>
+                        <form id="BlindsForm1">
+                            <label for="BWidth1">Width of Window:</label>
+                            <input type="number" name="BWidth1" id="BWidth1" step="0.01">
+                            <br>
+                            <label for="BLength1">Length of Window:</label>
+                            <input type="number" name="BLength1" id="BLength1" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Square Metres of Window: <input type="text" name="" id="MetresWindowB1" readonly>
+                        </div>
+                    </div>
+                    <div id="VerticalBlinds" class="container tab-pane fade">
+                        <h4>Vertical Blinds</h4>
+                        <form id="BlindsForm2">
+                            <label for="BWidth2">Width of Window:</label>
+                            <input type="number" name="BWidth2" id="BWidth2" step="0.01">
+                            <br>
+                            <label for="BLength2">Length of Window:</label>
+                            <input type="number" name="BLength2" id="BLength2" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Square Metres of Window: <input type="text" name="" id="MetresWindowB2" readonly>
+                        </div>
+                    </div>
+                    <div id="RollerBlinds" class="container tab-pane fade">
+                        <h4>Roller Blinds</h4>
+                        <form id="BlindsForm3">
+                            <label for="BWidth3">Width of Window:</label>
+                            <input type="number" name="BWidth3" id="BWidth3" step="0.01">
+                            <br>
+                            <label for="BLength3">Length of Window:</label>
+                            <input type="number" name="BLength3" id="BLength3" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Square Metres of Window: <input type="text" name="" id="MetresWindowB3" readonly>
+                        </div>
+                    </div>
+                    <div id="ZebraBlinds" class="container tab-pane fade">
+                        <h4>Zebra Blinds</h4>
+                        <form id="BlindsForm4">
+                            <label for="BWidth4">Width of Window:</label>
+                            <input type="number" name="BWidth4" id="BWidth4" step="0.01">
+                            <br>
+                            <label for="BLength4">Length of Window:</label>
+                            <input type="number" name="BLength4" id="BLength4" step="0.01">
+                            <br>
+                            <input type="submit" value="Calculate" class="btn btn-dark">
+                        </form>
+                        <div>
+                            Square Metres of Window: <input type="text" name="" id="MetresWindowB4" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
