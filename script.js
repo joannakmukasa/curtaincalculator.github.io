@@ -7,9 +7,9 @@ function calculateNetting(event) {
     let windowWidth = document.getElementById('WindowWidth').value;
 
     // Calculate the values
-    let metresNet = windowWidth * 3;
+    let metresNet = (windowWidth * 3) *100;
     let metresTape = metresNet;
-    let numHooks = windowWidth * 0.2;
+    let numHooks = (windowWidth * 0.2) *100;
     let numRunners = numHooks;
 
     // Set the calculated values to the respective input fields
@@ -28,8 +28,8 @@ function calculateCurtain1(event){
     let CwindowHeight1 = document.getElementById('CWindowHeight1').value;
 
     let NumPFabric1 = (CwindowWidth1 *2) / 120;
-    let MetresFabric1 = (CwindowHeight1 + 25) * NumPFabric1;
-    let MetresCurtainTape1 = NumPFabric1 * 140;
+    let MetresFabric1 = ((CwindowHeight1 + 25) * NumPFabric1) *100;
+    let MetresCurtainTape1 = (NumPFabric1 * 140) *100;
     let MetresCurtainLining1 = MetresFabric1;
 
     document.getElementById('NumPFabric1').value = NumPFabric1.toFixed(2);
@@ -48,8 +48,8 @@ function calculateCurtain2(event){
     let CwindowHeight2 = document.getElementById('CWindowHeight2').value.toFixed(2);
 
     let NumPFabric2 = (CwindowWidth2 *3) / 280;
-    let MetresFabric2 = (CwindowHeight2 + 25) * NumPFabric2;
-    let MetresCurtainTape2 = NumPFabric2 * 280;
+    let MetresFabric2 = ((CwindowHeight2 + 25) * NumPFabric2) *100;
+    let MetresCurtainTape2 = (NumPFabric2 * 280) *100;
     let MetresCurtainLining2 = MetresFabric2;
 
     document.getElementById('NumPFabric2').value = NumPFabric2.toFixed(2);
@@ -68,9 +68,9 @@ function calculateCurtain3(event){
     let CwindowHeight3 = document.getElementById('CWindowHeight3').value;
 
     let NumPFabric3 = (CwindowWidth3 *2) / 120;
-    let MetresFabric3 = (CwindowHeight3 + 20) * NumPFabric3;
+    let MetresFabric3 = ((CwindowHeight3 + 20) * NumPFabric3) *100;
     let MetresCurtainLining3 = MetresFabric3;
-    let MetresCurtainTape3 = NumPFabric3 * 140;
+    let MetresCurtainTape3 = (NumPFabric3 * 140) *100;
     let CNumHooks3 = CwindowWidth3 * 0.2;
     let CNumRunners3 = CNumHooks3;
     
@@ -92,9 +92,9 @@ function calculateCurtain4(event){
     let CwindowHeight4 = document.getElementById('CWindowHeight4').value;
 
     let NumPFabric4 = (CwindowWidth4 *2.5) / 120;
-    let MetresFabric4 = (CwindowHeight4 + 20) * NumPFabric4;
+    let MetresFabric4 = ((CwindowHeight4 + 20) * NumPFabric4) *100;
     let MetresCurtainLining4 = MetresFabric4;
-    let MetresCurtainTape4 = NumPFabric4 * 140;
+    let MetresCurtainTape4 = (NumPFabric4 * 140) *100;
     let CNumHooks4 = CwindowWidth4 * 0.15;
     let CNumRunners4 = CNumHooks4;
     
@@ -118,12 +118,12 @@ function calculateMn1(event){
     let MnLength1 = document.getElementById('MnLength1').value;
 // check formulas
     let NumPFabricM1 = (((MnWidth1 *2) / (MnLength1 *2))/200) * (1.5/180);
-    let MetresFabricM1 = MnHeight1 * NumPFabricM1;
-    let MetresTapeM1 = NumPFabricM1 * 180;
+    let MetresFabricM1 = (MnHeight1 * NumPFabricM1) *100;
+    let MetresTapeM1 = (NumPFabricM1 * 180) *100;
     let MetresTetronM1 = MetresTapeM1;
     let MNumHooks1 = ((((MnWidth1 + MnLength1) *2) + 200) * 40);
     let MNumRunners1 = MNumHooks1;
-    let LengthRope1 = (MnLength1 + MnWidth1) * 2;
+    let LengthRope1 = ((MnLength1 + MnWidth1) * 2) *100;
     
     document.getElementById('NumPFabricM1').value = NumPFabricM1.toFixed(2);
     document.getElementById('MetresFabricM1').value = MetresFabricM1.toFixed(2);
@@ -144,8 +144,8 @@ function calculateMn2(event){
     let MnLength2 = document.getElementById('MnLength2').value;
 
     let NumPFabricM2 = ((((MnLength2 + MnWidth2)*2)+400)/180)+1;
-    let MetresFabricM2 = MnHeight2 * NumPFabricM2;
-    let MetresTetronM2 = NumPFabricM2 * 90;
+    let MetresFabricM2 = (MnHeight2 * NumPFabricM2) *100;
+    let MetresTetronM2 = (NumPFabricM2 * 90) *100;
     
     document.getElementById('NumPFabricM2').value = NumPFabricM2.toFixed(2);
     document.getElementById('MetresFabricM2').value = MetresFabricM2.toFixed(2);
@@ -162,7 +162,8 @@ function calculateP1(event){
 
     let NumPFabricP1 = (PWidth1 * 3) /120;
     let MetresFabricP1 = PHeight1 +10 * NumPFabricP1;
-    let MetresTapeP1 = MetresFabricP1 * 140;
+    let MetresTapeP1 = (MetresFabricP1 * 140) *100;
+    MetresFabricP1 = MetresFabricP1 *100
     
     document.getElementById('NumPFabricP1').value = NumPFabricP1.toFixed(2);
     document.getElementById('MetresFabricP1').value = MetresFabricP1;
@@ -178,9 +179,10 @@ function calculateP2(event){
     let PHeight2 = document.getElementById('PHeight2').value;
 
     let NumPFabricP2 = (PWidth2 * 3) /120;
-    let MetresFabricP2 = PHeight2 +10 * NumPFabricP2;
+    let MetresFabricP2 = (PHeight2 +10 * NumPFabricP2) *100;
     let MetresTapeP2 = MetresFabricP2 * 140;
-    let MetresVelcroP2 = PWidth2;
+    let MetresVelcroP2 = PWidth2 *100;
+    MetresTapeP2 = MetresTapeP2 *100;
     
     document.getElementById('NumPFabricP2').value = NumPFabricP2.toFixed(2);
     document.getElementById('MetresFabricP2').value = MetresFabricP2;
@@ -197,10 +199,10 @@ function calculateP3(event){
     let PHeight3 = document.getElementById('PHeight3').value;
 
     let NumPFabricP3 = PWidth3 /120;
-    let MetresFabricP3 = PHeight3 +10 * NumPFabricP3;
+    let MetresFabricP3 = (PHeight3 +10 * NumPFabricP) *100;
     let MetresCurtainLiningP3 = MetresFabricP3;
     let MetresBoardP3 = MetresFabricP3;
-    let MetresBraidP3 = PWidth3 * 1.5 * 2;
+    let MetresBraidP3 = (PWidth3 * 1.5 * 2) *100;
 
     document.getElementById('NumPFabricP3').value = NumPFabricP3.toFixed(2);
     document.getElementById('MetresFabricP3').value = MetresFabricP3;
@@ -217,7 +219,7 @@ function calculateB1(event){
     let BWidth1 = document.getElementById('BWidth1').value;
     let BLength1 = document.getElementById('BLength1').value;
 
-    let MetresWindowB1 = BLength1 * BWidth1;
+    let MetresWindowB1 = (BLength1 * BWidth1) *100;
 
     document.getElementById('MetresWindowB1').value = MetresWindowB1;
 }
@@ -230,7 +232,7 @@ function calculateB2(event){
     let BWidth2 = document.getElementById('BWidth2').value;
     let BLength2 = document.getElementById('BLength2').value;
 
-    let MetresWindowB2 = BLength2 * BWidth2;
+    let MetresWindowB2 = (BLength2 * BWidth2) *100;
 
     document.getElementById('MetresWindowB2').value = MetresWindowB2;
 }
@@ -243,7 +245,7 @@ function calculateB3(event){
     let BWidth3 = document.getElementById('BWidth3').value;
     let BLength3 = document.getElementById('BLength3').value;
 
-    let MetresWindowB3 = BLength3 * BWidth3;
+    let MetresWindowB3 = (BLength3 * BWidth3) *100;
 
     document.getElementById('MetresWindowB3').value = MetresWindowB3;
 }
@@ -256,7 +258,7 @@ function calculateB4(event){
     let BWidth4 = document.getElementById('BWidth4').value;
     let BLength4 = document.getElementById('BLength4').value;
 
-    let MetresWindowB4 = BLength4 * BWidth4;
+    let MetresWindowB4 = (BLength4 * BWidth4) *100;
 
     document.getElementById('MetresWindowB4').value = MetresWindowB4;
 }
