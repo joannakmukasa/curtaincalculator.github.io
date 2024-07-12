@@ -30,7 +30,7 @@ function calculateCurtain1(event){
     let NumPFabric1 = (CwindowWidth1 *2) / 120;
     let MetresFabric1 = ((CwindowHeight1 + 25) * NumPFabric1) *100;
     let MetresCurtainTape1 = (NumPFabric1 * 140) *100;
-    let MetresCurtainLining1 = MetresFabric1;
+    let MetresCurtainLining1 = MetresFabric1/2;
 
     document.getElementById('NumPFabric1').value = NumPFabric1.toFixed(2);
     document.getElementById('MetresFabric1').value = MetresFabric1.toFixed(2);
@@ -44,8 +44,8 @@ document.getElementById('curtainForm2').addEventListener('submit', calculateCurt
 function calculateCurtain2(event){
     event.preventDefault();
     
-    let CwindowWidth2 = document.getElementById('CWindowWidth2').value.toFixed(2);
-    let CwindowHeight2 = document.getElementById('CWindowHeight2').value.toFixed(2);
+    let CwindowWidth2 = document.getElementById('CWindowWidth2').value;
+    let CwindowHeight2 = document.getElementById('CWindowHeight2').value;
 
     let NumPFabric2 = (CwindowWidth2 *3) / 280;
     let MetresFabric2 = ((CwindowHeight2 + 25) * NumPFabric2) *100;
@@ -53,7 +53,7 @@ function calculateCurtain2(event){
     let MetresCurtainLining2 = MetresFabric2;
 
     document.getElementById('NumPFabric2').value = NumPFabric2.toFixed(2);
-    document.getElementById('MetresFabric2').value = MetresFabric2;
+    document.getElementById('MetresFabric2').value = MetresFabric2.toFixed(2);
     document.getElementById('MetresCurtainTape2').value = MetresCurtainTape2.toFixed(2);
     document.getElementById('MetresCurtainLining2').value = MetresCurtainLining2.toFixed(2);
 
