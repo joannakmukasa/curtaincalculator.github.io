@@ -8,8 +8,9 @@ function calculateNetting(event) {
 
     // Calculate the values
     let metresNet = (windowWidth * 3) /100;
+    metresNet = Math.ceil(metresNet);
     let metresTape = metresNet;
-    let numHooks = (windowWidth * 0.2);
+    let numHooks = (metresNet * 20);
     let numRunners = numHooks;
 
     metresNet = Math.ceil(metresNet);
@@ -57,12 +58,12 @@ function calculateCurtain2(event){
     let CwindowWidth2 = document.getElementById('CWindowWidth2').value;
     let CwindowHeight2 = document.getElementById('CWindowHeight2').value;
 
-    let NumPFabric2 = (CwindowWidth2 *3) / 280;
+    let NumPFabric2 = (CwindowWidth2 *2) / 280;
+    NumPFabric2 = Math.ceil(NumPFabric2);
     let MetresFabric2 = ((CwindowHeight2 + 25) * NumPFabric2) /10000;
     let MetresCurtainTape2 = (NumPFabric2 * 280) /100;
     let MetresCurtainLining2 = MetresFabric2;
-
-    NumPFabric2 = Math.ceil(NumPFabric2);
+    
     MetresFabric2 = Math.ceil(MetresFabric2);
     MetresCurtainTape2 = Math.ceil(MetresCurtainTape2);
     MetresCurtainLining2 = Math.ceil(MetresCurtainLining2);
