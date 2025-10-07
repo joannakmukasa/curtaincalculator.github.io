@@ -67,11 +67,13 @@
                             <div>
                                 Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric1" readonly>
                                 <br>
-                                Number of of metres of fabric for window size: <input type="text" name="" id="MetresFabric1" readonly>
+                                Number of metres of fabric for window size: <input type="text" name="" id="MetresFabric1" readonly>
                                 <br>
                                 Number of metres of curtain tape: <input type="text" name="" id="MetresCurtainTape1" readonly>
                                 <br>
                                 Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLining1" readonly>
+                                <br>
+                                Number of Eyelets: <input type="text" name="" id="MetresEyelets1" readonly>
                             </div>
                         </div>
                         <p></p>
@@ -94,6 +96,8 @@
                                 Number of metres of curtain tape: <input type="text" name="" id="MetresCurtainTape2" readonly>
                                 <br>
                                 Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLining2" readonly>
+                                <br>
+                                Number of Eyelets: <input type="text" name="" id="MetresEyelets2" readonly>
                             </div>
                         </div>
                     </div>
@@ -179,9 +183,6 @@
                         <li class="nav-item">
                           <a class="nav-link" data-bs-toggle="tab" href="#onHooks">On Hooks</a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link" data-bs-toggle="tab" href="#onRing">On Ring</a>
-                        </li>
                     </ul>
                 </div>
                 <div class="tab-content">
@@ -211,17 +212,6 @@
                             Number of hooks: <input type="text" name="" id="MNumHooks1" readonly>
                             <br>
                             Number of runners: <input type="text" name="" id="MNumRunners1" readonly>
-                            <br>
-                            Note:
-                            <br>
-                            1 mosquito net = 1 pair of tie backs
-                            <br>
-                            In cases where the mosquito net is going directly on the rail that is fixed on the 
-                            ceiling provide for a rope. 
-                            <br>
-                            (this is made up out of tetron and hollow fiber)
-                            <br>
-                            Length of rope: <input type="text" name="" id="LengthRope1" readonly>
                         </div>
                     </div>
                     <div id="onHooks" class="container tab-pane fade">
@@ -234,7 +224,7 @@
                             <input type="number" name="MnHeight2" id="MnHeight2" step="0.01">
                             <br>
                             <label for="MnLength2">Length of area (in centimetres): </label>
-                            <input type="number" name="MnLength2" id="MnLength2">
+                            <input type="number" name="MnLength2" id="MnLength2" step="0.01">
                             <br>
                             <input type="submit" value="Calculate" class="btn btn-dark">
                         </form>
@@ -252,23 +242,6 @@
                                 <li>4 pieces of pipes ( 2 pieces the size of the width and 2 pieces the size of the length)</li>
                                 <li>4 pieces of hooks</li>
                                 <li>4 pieces of ties</li>
-                            </ol>
-                        </div>
-                    </div>
-                    <div id="onRing" class="container tab-pane fade">
-                        <h4>Mosquito Net on Ring or Round Mosquito Net</h4>
-                        **come back
-                        <div>
-                            <ol>
-                                <li>
-                                    Single Bed: 4 pieces
-                                </li>
-                                <li>
-                                    Double Bed: 5 pieces
-                                </li>
-                                <li>
-                                    King Bed: 6 pieces
-                                </li>
                             </ol>
                         </div>
                     </div>
