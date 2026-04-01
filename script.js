@@ -1,3 +1,457 @@
+// ============== AUTHENTICATION AND USER MANAGEMENT ==============
+// Initialize users from localStorage
+let appUsers = JSON.parse(localStorage.getItem('appUsers')) || [
+    { code: '001', name: 'Admin' },
+    { code: '002', name: 'User 1' },
+    { code: '003', name: 'User 2' }
+];
+
+let currentUser = null;
+
+// Save users to localStorage
+function saveUsers() {
+    localStorage.setItem('appUsers', JSON.stringify(appUsers));
+}
+
+// Check if user is already logged in on page load
+window.addEventListener('DOMContentLoaded', function() {
+    currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+        showMainApp();
+        restoreLastTab();
+    }
+});
+
+// Login form handler
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const userCode = document.getElementById('userCode').value.trim();
+    const errorDiv = document.getElementById('loginError');
+    
+    // Check if user exists
+    const user = appUsers.find(u => u.code === userCode);
+    
+    if (user) {
+        currentUser = userCode;
+        localStorage.setItem('currentUser', userCode);
+        document.getElementById('userCode').value = '';
+        errorDiv.style.display = 'none';
+        showMainApp();
+        restoreLastTab();
+    } else {
+        errorDiv.textContent = 'Invalid code. Please try again.';
+        errorDiv.style.display = 'block';
+        document.getElementById('userCode').value = '';
+    }
+});
+
+// Show main app
+function showMainApp() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+    document.getElementById('adminCenter').style.display = 'none';
+    
+    const user = appUsers.find(u => u.code === currentUser);
+    document.getElementById('currentUser').textContent = user ? user.name + ' (' + user.code + ')' : currentUser;
+}
+
+// Show login screen
+function showLoginScreen() {
+    document.getElementById('loginScreen').style.display = 'block';
+    document.getElementById('mainApp').style.display = 'none';
+    document.getElementById('adminCenter').style.display = 'none';
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+}
+
+// Logout button
+document.getElementById('logoutBtn').addEventListener('click', function() {
+    showLoginScreen();
+});
+
+// Admin button
+document.getElementById('adminBtn').addEventListener('click', function() {
+    showAdminCenter();
+});
+
+// Back to calculator button
+document.getElementById('backToCalcBtn').addEventListener('click', function() {
+    document.getElementById('adminCenter').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+});
+
+// Show admin center
+function showAdminCenter() {
+    document.getElementById('mainApp').style.display = 'none';
+    document.getElementById('adminCenter').style.display = 'block';
+    updateUsersList();
+}
+
+// Add new user
+document.getElementById('addUserBtn').addEventListener('click', function() {
+    const code = document.getElementById('newUserCode').value.trim();
+    const name = document.getElementById('newUserName').value.trim() || 'User ' + (appUsers.length + 1);
+    const messageDiv = document.getElementById('addUserMessage');
+    
+    if (!code || code.length !== 3 || !/^\d{3}$/.test(code)) {
+        messageDiv.className = 'alert alert-danger';
+        messageDiv.textContent = 'Please enter a valid 3-digit code.';
+        messageDiv.style.display = 'block';
+        return;
+    }
+    
+    // Check if code already exists
+    if (appUsers.find(u => u.code === code)) {
+        messageDiv.className = 'alert alert-danger';
+        messageDiv.textContent = 'This code already exists.';
+        messageDiv.style.display = 'block';
+        return;
+    }
+    
+    // Add new user
+    appUsers.push({ code: code, name: name });
+    saveUsers();
+    
+    messageDiv.className = 'alert alert-success';
+    messageDiv.textContent = 'User ' + name + ' (' + code + ') added successfully!';
+    messageDiv.style.display = 'block';
+    
+    document.getElementById('newUserCode').value = '';
+    document.getElementById('newUserName').value = '';
+    
+    updateUsersList();
+    
+    // Hide message after 3 seconds
+    setTimeout(function() {
+        messageDiv.style.display = 'none';
+    }, 3000);
+});
+
+// Update users list in admin center
+function updateUsersList() {
+    const usersList = document.getElementById('usersList');
+    usersList.innerHTML = '';
+    
+    appUsers.forEach(function(user) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${user.code}</td>
+            <td>${user.name}</td>
+            <td>
+                <button class="btn btn-danger btn-sm delete-user-btn" data-code="${user.code}">
+                    Delete
+                </button>
+            </td>
+        `;
+        usersList.appendChild(row);
+    });
+    
+    // Add delete event listeners
+    document.querySelectorAll('.delete-user-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const code = this.getAttribute('data-code');
+            if (code === currentUser) {
+                alert('Cannot delete the currently logged-in user.');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete user ' + code + '?')) {
+                appUsers = appUsers.filter(u => u.code !== code);
+                saveUsers();
+                updateUsersList();
+            }
+        });
+    });
+}
+
+// ============== TAB NAVIGATION AND MEMORY ==============
+// Setup tab change listeners to remember last tab
+document.addEventListener('shown.bs.tab', function(e) {
+    if (currentUser) {
+        const activeTab = e.target.getAttribute('href').substring(1);
+        localStorage.setItem('lastTab_' + currentUser, activeTab);
+    }
+});
+
+// Restore last tab for user
+function restoreLastTab() {
+    if (!currentUser) return;
+    
+    const lastTab = localStorage.getItem('lastTab_' + currentUser);
+    if (lastTab) {
+        const tabLink = document.querySelector(`[data-bs-toggle="tab"][href="#${lastTab}"]`);
+        if (tabLink) {
+            const tab = new bootstrap.Tab(tabLink);
+            tab.show();
+        }
+    }
+}
+
+// ============== CALCULATION HISTORY ==============
+// Add calculation to history
+function addToHistory(calculationType, inputs, outputs) {
+    if (!currentUser) return;
+    
+    const historyKey = 'userHistory_' + currentUser;
+    let history = JSON.parse(localStorage.getItem(historyKey)) || [];
+    
+    const calculation = {
+        id: Date.now(),
+        type: calculationType,
+        inputs: inputs,
+        outputs: outputs,
+        timestamp: new Date().toLocaleString()
+    };
+    
+    history.push(calculation);
+    localStorage.setItem(historyKey, JSON.stringify(history));
+    
+    updateHistoryDisplay();
+}
+
+// Update history display
+function updateHistoryDisplay() {
+    if (!currentUser) return;
+    
+    const historyKey = 'userHistory_' + currentUser;
+    const history = JSON.parse(localStorage.getItem(historyKey)) || [];
+    
+    const historyEmpty = document.getElementById('historyEmpty');
+    const historyTable = document.getElementById('historyTable');
+    const historyList = document.getElementById('historyList');
+    
+    if (history.length === 0) {
+        historyEmpty.style.display = 'block';
+        historyTable.style.display = 'none';
+        return;
+    }
+    
+    historyEmpty.style.display = 'none';
+    historyTable.style.display = 'block';
+    historyList.innerHTML = '';
+    
+    // Display in reverse order (newest first)
+    history.slice().reverse().forEach(function(calc) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><input type="checkbox" class="history-checkbox" data-id="${calc.id}"></td>
+            <td>${calc.timestamp}</td>
+            <td>${calc.type}</td>
+            <td>
+                <button class="btn btn-info btn-sm view-history-btn" data-id="${calc.id}">View</button>
+                <button class="btn btn-danger btn-sm delete-history-btn" data-id="${calc.id}">Delete</button>
+            </td>
+        `;
+        historyList.appendChild(row);
+    });
+    
+    // Add event listeners
+    document.querySelectorAll('.delete-history-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const id = parseInt(this.getAttribute('data-id'));
+            deleteHistoryItem(id);
+        });
+    });
+    
+    document.querySelectorAll('.view-history-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const id = parseInt(this.getAttribute('data-id'));
+            viewHistoryItem(id);
+        });
+    });
+}
+
+// Delete history item
+function deleteHistoryItem(id) {
+    if (!currentUser) return;
+    
+    const historyKey = 'userHistory_' + currentUser;
+    let history = JSON.parse(localStorage.getItem(historyKey)) || [];
+    history = history.filter(h => h.id !== id);
+    localStorage.setItem(historyKey, JSON.stringify(history));
+    
+    updateHistoryDisplay();
+}
+
+// Clear all history
+document.getElementById('clearHistoryBtn').addEventListener('click', function() {
+    if (!currentUser) return;
+    
+    if (confirm('Are you sure you want to clear all calculation history?')) {
+        localStorage.removeItem('userHistory_' + currentUser);
+        updateHistoryDisplay();
+    }
+});
+
+// Delete selected history items
+document.getElementById('deleteSelectedBtn').addEventListener('click', function() {
+    if (!currentUser) return;
+    
+    const checkboxes = document.querySelectorAll('.history-checkbox:checked');
+    if (checkboxes.length === 0) {
+        alert('Please select at least one item to delete.');
+        return;
+    }
+    
+    if (confirm('Delete ' + checkboxes.length + ' selected item(s)?')) {
+        const historyKey = 'userHistory_' + currentUser;
+        let history = JSON.parse(localStorage.getItem(historyKey)) || [];
+        
+        const idsToDelete = Array.from(checkboxes).map(cb => parseInt(cb.getAttribute('data-id')));
+        history = history.filter(h => !idsToDelete.includes(h.id));
+        
+        localStorage.setItem(historyKey, JSON.stringify(history));
+        updateHistoryDisplay();
+    }
+});
+
+// Select all checkbox
+document.addEventListener('click', function(e) {
+    if (e.target.id === 'selectAllCheckbox') {
+        const checkboxes = document.querySelectorAll('.history-checkbox');
+        checkboxes.forEach(cb => cb.checked = e.target.checked);
+    }
+});
+
+// View history item (show values in alert)
+function viewHistoryItem(id) {
+    if (!currentUser) return;
+    
+    const historyKey = 'userHistory_' + currentUser;
+    const history = JSON.parse(localStorage.getItem(historyKey)) || [];
+    const calc = history.find(h => h.id === id);
+    
+    if (calc) {
+        let details = `Type: ${calc.type}\nDate: ${calc.timestamp}\n\nInputs:\n`;
+        for (let key in calc.inputs) {
+            details += `${key}: ${calc.inputs[key]}\n`;
+        }
+        details += `\nOutputs:\n`;
+        for (let key in calc.outputs) {
+            details += `${key}: ${calc.outputs[key]}\n`;
+        }
+        alert(details);
+    }
+}
+
+// ============== DOWNLOAD CALCULATION ==============
+function downloadCalculation(formId, calculationType) {
+    if (!currentUser) {
+        alert('User not logged in');
+        return;
+    }
+    
+    const form = document.getElementById(formId);
+    if (!form) return;
+    
+    // Get all form inputs
+    const inputs = {};
+    form.querySelectorAll('input[type="number"]').forEach(input => {
+        inputs[input.getAttribute('name') || input.id] = input.value;
+    });
+    
+    // Get all results
+    const results = {};
+    const resultsDiv = form.closest('.results-section') || form.parentElement.querySelector('.results-section') || form.nextElementSibling;
+    
+    if (resultsDiv) {
+        resultsDiv.querySelectorAll('input[readonly]').forEach(input => {
+            results[input.getAttribute('name') || input.id] = input.value;
+        });
+    }
+    
+    // Check if any results exist
+    const hasResults = Object.keys(results).length > 0 && Object.values(results).some(v => v);
+    
+    if (!hasResults) {
+        alert('Please calculate first before downloading.');
+        return;
+    }
+    
+    // Create HTML content for PDF
+    const user = appUsers.find(u => u.code === currentUser);
+    const userName = user ? user.name : currentUser;
+    const timestamp = new Date().toLocaleString();
+    
+    let htmlContent = `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+            <h1 style="text-align: center; color: #A9C338;">Nina Interiors</h1>
+            <h2 style="text-align: center;">Calculation Report</h2>
+            <hr>
+            
+            <p><strong>Calculation Type:</strong> ${calculationType}</p>
+            <p><strong>User:</strong> ${userName} (${currentUser})</p>
+            <p><strong>Date & Time:</strong> ${timestamp}</p>
+            
+            <h3 style="color: #A9C338; margin-top: 30px;">Input Values</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="background-color: #A9C338;">
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">Parameter</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">Value</th>
+                </tr>
+    `;
+    
+    for (let key in inputs) {
+        if (inputs[key]) {
+            htmlContent += `
+                <tr>
+                    <td style="border: 1px solid #ccc; padding: 8px;">${key}</td>
+                    <td style="border: 1px solid #ccc; padding: 8px;">${inputs[key]}</td>
+                </tr>
+            `;
+        }
+    }
+    
+    htmlContent += `
+            </table>
+            
+            <h3 style="color: #A9C338; margin-top: 30px;">Results</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="background-color: #A9C338;">
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">Result</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">Value</th>
+                </tr>
+    `;
+    
+    for (let key in results) {
+        if (results[key]) {
+            htmlContent += `
+                <tr>
+                    <td style="border: 1px solid #ccc; padding: 8px;">${key}</td>
+                    <td style="border: 1px solid #ccc; padding: 8px;">${results[key]}</td>
+                </tr>
+            `;
+        }
+    }
+    
+    htmlContent += `
+            </table>
+            
+            <p style="margin-top: 40px; text-align: center; color: #666; font-size: 12px;">
+                Generated by Nina Interiors Calculator - ${new Date().getFullYear()}
+            </p>
+        </div>
+    `;
+    
+    // Generate PDF
+    const element = document.createElement('div');
+    element.innerHTML = htmlContent;
+    
+    const opt = {
+        margin: 10,
+        filename: `${calculationType.replace(/\s+/g, '_')}_${Date.now()}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+    };
+    
+    html2pdf().set(opt).from(element).save();
+    
+    // Add to history
+    addToHistory(calculationType, inputs, results);
+}
+
+// ============== CALCULATOR FUNCTIONS ==============
 document.getElementById('nettingForm').addEventListener('submit', calculateNetting);
 
 function calculateNetting(event) {

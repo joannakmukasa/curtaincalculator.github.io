@@ -7,13 +7,42 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Latest compiled JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- html2pdf for PDF generation -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
         <title>Nina Interiors - Calculator</title>
-        <h2 class="text-center">Nina Interiors</h2>
     </head>
-    <body class="container rounded p-2 mx-auto" style="width:fit-content;">
-        <!-- <h1>Nina Interiors</h1> -->
-        <!--Main menu-->
-        <div>
+    <body style="background-color: #000;">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-container">
+            <div class="login-box">
+                <h2 class="text-center mb-4">Nina Interiors</h2>
+                <h4 class="text-center mb-4">Calculator App</h4>
+                <form id="loginForm">
+                    <label for="userCode">Enter 3-Digit Code:</label>
+                    <input type="text" id="userCode" name="userCode" maxlength="3" placeholder="e.g., 123" required>
+                    <br>
+                    <button type="submit" class="btn btn-dark w-100">Login</button>
+                </form>
+                <div id="loginError" class="alert alert-danger mt-3" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Main App (Hidden until logged in) -->
+        <div id="mainApp" style="display:none;">
+            <!-- Header with user info and buttons -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="text-center flex-grow-1">Nina Interiors</h2>
+                <div class="header-buttons">
+                    <button id="adminBtn" class="btn btn-warning btn-sm">Admin</button>
+                    <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
+                </div>
+            </div>
+            <div class="text-center mb-3">
+                <small>Logged in as: <strong id="currentUser"></strong></small>
+            </div>
+
+            <!--Main menu-->
+            <div>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" data-bs-toggle="tab" href="#curtains">Curtains</a>
@@ -30,8 +59,11 @@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" href="#blinds">Blinds</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#history">History</a>
+                </li>
             </ul>
-        </div>
+            </div>
         <p></p>
         <!--Curtain calculator section-->
         <div class="tab-content">
@@ -51,7 +83,7 @@
                     </ul>
                 </div>
                 <div class="tab-content">
-                    <div id="onEyelets" class="container tab-pane active">
+                    <div id="onEyelets" class="tab-pane active">
                         <h4>Curtains on Eyelets</h4>
                         <div id="singleWidth">
                             <h5>Single width fabric</h5>
@@ -64,7 +96,7 @@
                                 <br>
                                 <input type="submit" value="Calculate" class="btn btn-dark">
                             </form>
-                            <div>
+                            <div class="results-section" id="results1">
                                 Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric1" readonly>
                                 <br>
                                 Number of metres of fabric for window size: <input type="text" name="" id="MetresFabric1" readonly>
@@ -74,6 +106,8 @@
                                 Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLining1" readonly>
                                 <br>
                                 Number of Eyelets: <input type="text" name="" id="MetresEyelets1" readonly>
+                                <br>
+                                <button type="button" class="btn btn-info btn-sm mt-2" onclick="downloadCalculation('curtainForm1', 'Curtains on Eyelets - Single Width')">Download PDF</button>
                             </div>
                         </div>
                         <p></p>
@@ -88,7 +122,7 @@
                                 <br>
                                 <input type="submit" value="Calculate" class="btn btn-dark">
                             </form>
-                            <div>
+                            <div class="results-section" id="results2">
                                 Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric2" readonly>
                                 <br>
                                 Number of of metres of fabric for window size: <input type="text" name="" id="MetresFabric2" readonly>
@@ -98,11 +132,13 @@
                                 Number of metres of curtain lining: <input type="text" name="" id="MetresCurtainLining2" readonly>
                                 <br>
                                 Number of Eyelets: <input type="text" name="" id="MetresEyelets2" readonly>
+                                <br>
+                                <button type="button" class="btn btn-info btn-sm mt-2" onclick="downloadCalculation('curtainForm2', 'Curtains on Eyelets - Double Width')">Download PDF</button>
                             </div>
                         </div>
                     </div>
                     <p></p>
-                    <div id="OnNormalTape" class="container tab-pane fade">
+                    <div id="OnNormalTape" class="tab-pane fade">
                         <h4>Curtains on Normal Tape</h4>
                         <form id="curtainForm3">
                             <label for="CWindowWidth3">Width of Window (in centimetres):</label>
@@ -113,7 +149,7 @@
                             <br>
                             <input type="submit" value="Calculate" class="btn btn-dark">
                         </form>
-                        <div>
+                        <div class="results-section" id="results3">
                             Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric3" readonly>
                             <br>
                             Number of of metres of fabric for window size: <input type="text" name="" id="MetresFabric3" readonly>
@@ -125,10 +161,12 @@
                             Number of hooks: <input type="text" name="" id="CNumHooks3" readonly>
                             <br>
                             Number of runners: <input type="text" name="" id="CNumRunners3" readonly>
+                            <br>
+                            <button type="button" class="btn btn-info btn-sm mt-2" onclick="downloadCalculation('curtainForm3', 'Curtains on Normal Tape')">Download PDF</button>
                         </div>
                     </div>
                     <p></p>
-                    <div id="onPinchPleatTape" class="container tab-pane fade">
+                    <div id="onPinchPleatTape" class="tab-pane fade">
                         <h4>Curtains on Pinch Pleat Tape</h4>
                         <form id="curtainForm4">
                             <label for="CWindowWidth4">Width of Window (in centimetres):</label>
@@ -139,7 +177,7 @@
                             <br>
                             <input type="submit" value="Calculate" class="btn btn-dark">
                         </form>
-                        <div>
+                        <div class="results-section" id="results4">
                             Number of pieces of fabric (to be cut for window size): <input type="text" name="" id="NumPFabric4" readonly>
                             <br>
                             Number of of metres of fabric for window size: <input type="text" name="" id="MetresFabric4" readonly>
@@ -151,11 +189,13 @@
                             Number of hooks: <input type="text" name="" id="CNumHooks4" readonly>
                             <br>
                             Number of runners: <input type="text" name="" id="CNumRunners4" readonly>
+                            <br>
+                            <button type="button" class="btn btn-info btn-sm mt-2" onclick="downloadCalculation('curtainForm4', 'Curtains on Pinch Pleat Tape')">Download PDF</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container tab-pane fade" id="nets">
+            <div class="tab-pane fade" id="nets">
                 <h3>Netting Calculator</h3>
                 <form id="nettingForm">
                     <label for="WindowWidth">Width of Window (in centimetres):</label>
@@ -163,7 +203,7 @@
                     <br>
                     <input type="submit" value="Calculate" class="btn btn-dark">
                 </form>
-                <div>
+                <div class="results-section" id="resultsNet">
                     Number of metres of net: <input type="text" name="" id="MetresNet" readonly>
                     <br>
                     Number of metres of tape: <input type="text" name="" id="MetresTape" readonly>
@@ -171,9 +211,11 @@
                     Number of hooks: <input type="text" name="" id="NumHooks" readonly>
                     <br>
                     Number of runners: <input type="text" name="" id="NumRunners" readonly>
+                    <br>
+                    <button type="button" class="btn btn-info btn-sm mt-2" onclick="downloadCalculation('nettingForm', 'Netting Calculator')">Download PDF</button>
                 </div>
             </div>
-            <div class="container tab-pane fade" id="mosquitoNets">
+            <div class="tab-pane fade" id="mosquitoNets">
                 <h3>Mosquito Netting Calculator</h3>
                 <div>
                     <ul class="nav nav-tabs flex column" role="tablist">
@@ -186,7 +228,7 @@
                     </ul>
                 </div>
                 <div class="tab-content">
-                    <div id="onRail" class="container tab-pane active">
+                    <div id="onRail" class="tab-pane active">
                         <h4>Mosquito Net on Rail</h4>
                         <form id="MnForm1">
                             <label for="MnWidth1">Width of area to be covered (in centimetres):</label>
@@ -214,7 +256,7 @@
                             Number of runners: <input type="text" name="" id="MNumRunners1" readonly>
                         </div>
                     </div>
-                    <div id="onHooks" class="container tab-pane fade">
+                    <div id="onHooks" class="tab-pane fade">
                         <h4>Mosquito Net on Hooks</h4>
                         <form id="MnForm2">
                             <label for="MnWidth2">Width of area to be covered (in centimetres):</label>
@@ -247,7 +289,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container tab-pane fade" id="pelmets">
+            <div class="tab-pane fade" id="pelmets">
                 <h3>Pelmets Calculator</h3>
                 <div>
                     <ul class="nav nav-tabs flex column" role="tablist">
@@ -263,7 +305,7 @@
                     </ul>
                 </div>
                 <div class="tab-content">
-                    <div id="GatheredPelmets" class="container tab-pane active">
+                    <div id="GatheredPelmets" class="tab-pane active">
                         <h4>Gathered Pelmets</h4>
                         <form id="PelmetForm1">
                             <label for="PWidth1">Width of curtain box (in centimetres):</label>
@@ -282,7 +324,7 @@
                             Number of metres of curtain tape: <input type="text" name="" id="MetresTapeP1" readonly>
                         </div>
                     </div>
-                    <div id="PleatedPelmets" class="container tab-pane fade">
+                    <div id="PleatedPelmets" class="tab-pane fade">
                         <h4>Pleated Pelmets</h4>
                         <form id="PelmetForm2">
                             <label for="PWidth2">Width of curtain box (in centimetres):</label>
@@ -303,7 +345,7 @@
                             Length of Velcro: <input type="text" name="" id="MetresVelcroP2" readonly>
                         </div>
                     </div>
-                    <div id="StraightPelmets" class="container tab-pane fade">
+                    <div id="StraightPelmets" class="tab-pane fade">
                         <h4>Straight Pelmets</h4>
                         <form id="PelmetForm3">
                             <label for="PWidth3">Width of curtain box (in centimetres):</label>
@@ -328,7 +370,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container tab-pane fade" id="blinds">
+            <div class="tab-pane fade" id="blinds">
                 <h3>Blinds Calculator</h3>
                 <div>
                     <ul class="nav nav-tabs flex column" role="tablist">
@@ -347,7 +389,7 @@
                     </ul>
                 </div>
                 <div class="tab-content">
-                    <div id="VenetianBlinds" class="container tab-pane active">
+                    <div id="VenetianBlinds" class="tab-pane active">
                         <h4>Venetian Blinds</h4>
                         <form id="BlindsForm1">
                             <label for="BWidth1">Width of Window (in centimetres):</label>
@@ -362,7 +404,7 @@
                             Square Metres of Window: <input type="text" name="" id="MetresWindowB1" readonly>
                         </div>
                     </div>
-                    <div id="VerticalBlinds" class="container tab-pane fade">
+                    <div id="VerticalBlinds" class="tab-pane fade">
                         <h4>Vertical Blinds</h4>
                         <form id="BlindsForm2">
                             <label for="BWidth2">Width of Window (in centimetres):</label>
@@ -377,7 +419,7 @@
                             Square Metres of Window: <input type="text" name="" id="MetresWindowB2" readonly>
                         </div>
                     </div>
-                    <div id="RollerBlinds" class="container tab-pane fade">
+                    <div id="RollerBlinds" class="tab-pane fade">
                         <h4>Roller Blinds</h4>
                         <form id="BlindsForm3">
                             <label for="BWidth3">Width of Window (in centimetres):</label>
@@ -392,7 +434,7 @@
                             Square Metres of Window: <input type="text" name="" id="MetresWindowB3" readonly>
                         </div>
                     </div>
-                    <div id="ZebraBlinds" class="container tab-pane fade">
+                    <div id="ZebraBlinds" class="tab-pane fade">
                         <h4>Zebra Blinds</h4>
                         <form id="BlindsForm4">
                             <label for="BWidth4">Width of Window (in centimetres):</label>
@@ -408,6 +450,70 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="tab-pane fade" id="history">
+                <h3>Calculation History</h3>
+                <div class="mb-3">
+                    <button id="clearHistoryBtn" class="btn btn-danger">Clear All History</button>
+                    <button id="deleteSelectedBtn" class="btn btn-warning">Delete Selected</button>
+                </div>
+                <div id="historyEmpty" class="alert alert-info">
+                    No calculations yet.
+                </div>
+                <div id="historyTable" style="display:none;">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllCheckbox"></th>
+                                <th>Date/Time</th>
+                                <th>Type</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyList">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Admin Center (Hidden by default) -->
+        <div id="adminCenter" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Admin Center</h2>
+                <button id="backToCalcBtn" class="btn btn-secondary">Back to Calculator</button>
+            </div>
+
+            <div class="admin-section mb-4">
+                <h4>Add New User</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="newUserCode">3-Digit Code:</label>
+                        <input type="text" id="newUserCode" maxlength="3" placeholder="e.g., 456">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="newUserName">User Name (Optional):</label>
+                        <input type="text" id="newUserName" placeholder="e.g., John">
+                    </div>
+                </div>
+                <button id="addUserBtn" class="btn btn-success mt-3">Add User</button>
+                <div id="addUserMessage" class="alert mt-2" style="display:none;"></div>
+            </div>
+
+            <div class="admin-section">
+                <h4>Active Users</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersList">
+                    </tbody>
+                </table>
             </div>
         </div>
         
